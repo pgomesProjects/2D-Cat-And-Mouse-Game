@@ -4,14 +4,14 @@ using std::pair;
 using std::vector;
 
 //Headers
+#include "Entity.h"
 #include "Maze.h"
 
-class Mouse {
+class Mouse : public Entity {
 public:
-	void Move(Maze& currentMaze, int row, int col);
-	void SetPosition(Maze &currentMaze, pair<int, int> position);
+	Mouse();
+	Mouse(int speed);
 
 private:
-	pair<int, int> position;
 	vector<Cell> scentTrail;
 };

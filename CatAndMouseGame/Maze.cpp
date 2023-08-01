@@ -59,7 +59,7 @@ void Maze::GenerateMaze(int x, int y) {
 	//Set the current space as empty
 	*(this->mazeData + x * cols + y) = emptySpace;
 
-	//Randomly check the spaces around the current space (left, right, up, down)
+	//Randomly check the spaces around the current space (up, down, left, right)
 	vector<pair<int, int>> adjacent = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 	shuffle(adjacent.begin(), adjacent.end(), gen);
 
@@ -81,15 +81,51 @@ void Maze::GenerateMaze(int x, int y) {
 }
 
 /// <summary>
+/// Gets a position in the maze within a distance from the player.
+/// </summary>
+/// <param name="icon">The icon of the item to place.</param>
+/// <param name="playerPosition">The position of the player.</param>
+/// <param name="distanceBuffer">The minimum distance between the player and the item to place.</param>
+/// <returns>The position in the maze that is empty.</returns>
+pair<int, int> Maze::GetEmptyPositionInMaze(pair<int, int> playerPosition, int distanceBuffer) {
+	
+	//Find all valid empty spaces within the maze
+	vector<pair<int, int>> emptySpaces;
+	
+	for (int x = 0; x < this->rows; x++) {
+		for (int y = 0; y < this->cols; y++) {
+			//If the current space is an empty space and is the correct distance from the player, add to the list
+			if (this->mazeData[x * this->cols + y].GetPiece() == emptySpace && GetDistanceFrom({x, y}, playerPosition) >= distanceBuffer) {
+				emptySpaces.push_back({x, y});
+			}
+		}
+	}
+
+	//If there are spaces to place the item, choose one at random
+	if (!emptySpaces.empty()) {
+		std::uniform_int_distribution<int> dist(0, emptySpaces.size() - 1);
+		return emptySpaces[dist(gen)];
+	}
+
+	else
+		return { -1, -1 };
+
+}
+
+int Maze::GetDistanceFrom(const pair<int, int>& firstCell, const pair<int, int>& secondCell) {
+	return abs(secondCell.first - firstCell.first) + abs(secondCell.second - firstCell.second);
+}
+
+/// <summary>
 /// Prints out the maze to the console with spacing.
 /// </summary>
 void Maze::Print() {
 
 	for (int x = 0; x < this->rows; x++) {
 		
-		for (int y = 0; y < cols; y++) {
+		for (int y = 0; y < this->cols; y++) {
 
-			cout << this->mazeData[x * cols + y].GetPiece();
+			cout << this->mazeData[x * this->cols + y].GetPiece();
 
 			//Add spaces between each column as needed
 			for (int s = 0; s < this->spacingX; s++) {

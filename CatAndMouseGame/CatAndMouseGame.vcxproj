@@ -139,13 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cat.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Mouse.h" />
   </ItemGroup>

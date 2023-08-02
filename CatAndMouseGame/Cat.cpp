@@ -34,7 +34,6 @@ bool Cat::CheckForMovement(Maze& currentMaze) {
 	//Moves the cat based on the speed and adds any extra movements that may be applicable
 	for (int i = 0; i < this->speed + extraMovements; i++) {
 
-
 		vector<pair<int, int>> adjacent = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 		vector<pair<int, int>> possibleMovements;
 

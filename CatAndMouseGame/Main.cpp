@@ -1,6 +1,5 @@
 /*
 *   2D Cat n' Mouse Maze Game C++ Sample
-*   Author: Peter Gomes
 *   Date: 8/2/23
 */
 
@@ -30,12 +29,14 @@ const int MINIMUM_CAT_SPAWN_DISTANCE = 10;
 const int MINIMUM_FOOD_SPAWN_DISTANCE = 10;
 const int CAT_MOVEMENT_COOLDOWN = 2;
 
+const pair<int, int> mazeDimensions = {30, 35};
+
 int main() {
 
     //Initialize the maze, player, and cat with some values
-    Maze* newMaze = new Maze(20, 20, 2, 1);
-    Mouse* playerMouse = new Mouse(1, 0.05f);
-    Cat* enemyCat = new Cat(1, 0.25f);
+    Maze* newMaze = new Maze(mazeDimensions.first, mazeDimensions.second, 2, 1);
+    Mouse* playerMouse = new Mouse(1, 0.2f);
+    Cat* enemyCat = new Cat(1, 0.125f);
 
     //Add food to the maze
     for (int i = 0; i < MAX_FOOD_PIECES; i++) {
@@ -163,7 +164,7 @@ void RefreshGameBoard(Maze& currentMaze, Cat& currentCat, int score) {
 
     //Display information
     cout << "\nScore: " << score << " / " << MAX_FOOD_PIECES << endl;
-    cout << "\Cat Status: " << (currentCat.CanSmellPlayer() ? "Tracking Scent" : "Wandering") << endl;
+    cout << "\nCat Status: " << (currentCat.CanSmellPlayer() ? "Tracking Scent" : "Wandering") << endl;
     cout << "\nPress WASD to move. Press Q to quit the game." << endl;
 }
 
@@ -177,7 +178,7 @@ void StartScreen() {
     {
         "   ______           __                  _            __  ___                             ",
         "  / ____/  ____ _  / /_          ____  ( )          /  |/  /  ____   __  __   _____  ___ ",
-        " / /      / __ `/ / __/         / __ \ |/          / /|_/ /  / __ \\ / / / /  / ___/ / _ \\",
+        " / /      / __ `/ / __/         / __ \\ |/          / /|_/ /  / __ \\ / / / /  / ___/ / _ \\",
         "/ /___   / /_/ / / /_          / / / /            / /  / /  / /_/ // /_/ /  (__  ) /  __/",
         "\\____/   \\__,_/  \\__/         /_/ /_/            /_/  /_/   \\____/ \\__,_/  /____/  \\___/ ",
         "                                                                                         ",

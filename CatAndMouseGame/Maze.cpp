@@ -57,7 +57,7 @@ void Maze::PopulateMaze() {
 void Maze::GenerateMaze(int x, int y) {
 
 	//Set the current space as empty
-	*(this->mazeData + x * cols + y) = pieces["emptySpace"].first;
+	*(this->mazeData + x * this->cols + y) = pieces["emptySpace"].first;
 
 	//Randomly check the spaces around the current space (up, down, left, right)
 	vector<pair<int, int>> adjacent = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
@@ -71,8 +71,8 @@ void Maze::GenerateMaze(int x, int y) {
 		int newY = y + 2 * dir.second;
 
 		//If the position being checked is not out of bounds and is a wall piece, make it an empty piece and make the path between the cells an empty piece
-		if (newX >= 0 && newX < this->cols && newY >= 0 && newY < this->rows && this->mazeData[newX * this->cols + newY].GetTopPiece() == pieces["wall"].first) {
-			this->mazeData[newX * cols + newY].AddPiece(pieces["emptySpace"].first);
+		if (newX >= 0 && newX < this->rows && newY >= 0 && newY < this->cols && this->mazeData[newX * this->cols + newY].GetTopPiece() == pieces["wall"].first) {
+			this->mazeData[newX * this->cols + newY].AddPiece(pieces["emptySpace"].first);
 			this->mazeData[(x + dir.first) * this->cols + (y + dir.second)].AddPiece(pieces["emptySpace"].first);
 
 			//Check the new position's adjacent positions
@@ -104,7 +104,7 @@ pair<int, int> Maze::GetEmptyPositionInMaze(pair<int, int> playerPosition, int d
 
 	//If there are spaces to place the item, choose one at random
 	if (!emptySpaces.empty()) {
-		std::uniform_int_distribution<int> dist(0, emptySpaces.size() - 1);
+		std::uniform_int_distribution<int> dist(0, (int)emptySpaces.size() - 1);
 		return emptySpaces[dist(gen)];
 	}
 

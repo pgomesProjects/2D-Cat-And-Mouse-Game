@@ -29,7 +29,7 @@ bool Entity::Move(Maze& currentMaze, int row, int col) {
 		int newY = this->position.second + col;
 
 		//If the new position for the entity is not out of bounds and is either an empty / food space, allow the entity to move there
-		if (newX >= 0 && newX < currentMaze.GetCols() && newY >= 0 && newY < currentMaze.GetRows() && (currentMaze.GetCell(newX, newY).GetTopPiece() == pieces["emptySpace"].first) || (currentMaze.GetCell(newX, newY).GetTopPiece() == pieces["food"].first)) {
+		if (newX >= 0 && newX < currentMaze.GetRows() && newY >= 0 && newY < currentMaze.GetCols() && (currentMaze.GetCell(newX, newY).GetTopPiece() == pieces["emptySpace"].first) || (currentMaze.GetCell(newX, newY).GetTopPiece() == pieces["food"].first)) {
 			SetPosition(currentMaze, { newX, newY });
 			moveSuccessful = true;
 		}

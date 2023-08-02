@@ -33,6 +33,9 @@
     <ClCompile Include="Cat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Food.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Maze.h">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Cat.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Food.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

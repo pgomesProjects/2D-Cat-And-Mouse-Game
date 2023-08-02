@@ -7,11 +7,20 @@ using std::vector;
 #include "Entity.h"
 #include "Maze.h"
 
+const float MAX_TRAIL_SCENT = 1.0f;
+
 class Mouse : public Entity {
 public:
-	Mouse();
-	Mouse(int speed);
+	Mouse(int speed, float scentDepletionRate);
+
+	bool CheckForFood(Maze& currentMaze);
+	bool Move(Maze& currentMaze, int row, int col) override;
+
+	void PrintScentTrail();
 
 private:
-	vector<Cell> scentTrail;
+	vector<Cell*> scentTrail;
+	float scentDepletionRate;
+
+	void UpdateScentTrail(Maze& currentMaze);
 };

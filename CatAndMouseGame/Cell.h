@@ -1,13 +1,16 @@
 #pragma once
+#include <map>
+#include <iostream>
 #include <string>
+#include <vector>
+using std::cout;
+using std::map;
+using std::pair;
 using std::string;
+using std::vector;
 
 //Global declarations for Maze piece characters
-extern char wall;
-extern char emptySpace;
-extern char mouse;
-extern char cat;
-extern char food;
+extern map<string, pair<char, int>> pieces;
 
 class Cell {
 public:
@@ -16,15 +19,20 @@ public:
 	Cell(char piece);
 	Cell(char piece, float scentStrength);
 
+	void AddPiece(char piece);
+	void RemovePiece(char piece);
+
 	//GETTERS
-	char GetPiece();
+	char GetTopPiece();
+	bool ContainsPiece(char piece);
 	float GetScentStrength();
 
 	//SETTERS
-	void SetPiece(char piece);
 	void SetScentStrength(float scentStrength);
 
 private:
-	char piece;
+	vector<pair<char, int>> pieceList;
 	float scentStrength;
+
+	int GetPiecePriority(char piece);
 };

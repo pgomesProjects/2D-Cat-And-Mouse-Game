@@ -16,6 +16,9 @@ public:
 
 	bool CheckForMovement(Maze& currentMaze);
 
+	bool CanSmellPlayer();
+
 private:
 	float chanceForExtraMovement;
+	bool canSmellPlayer;
 };

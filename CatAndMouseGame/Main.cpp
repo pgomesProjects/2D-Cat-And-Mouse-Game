@@ -29,12 +29,12 @@ const int MINIMUM_CAT_SPAWN_DISTANCE = 10;
 const int MINIMUM_FOOD_SPAWN_DISTANCE = 10;
 const int CAT_MOVEMENT_COOLDOWN = 2;
 
-const pair<int, int> mazeDimensions = {30, 35};
+const pair<int, int> MAZE_DIMENSIONS = {30, 35};
 
 int main() {
 
     //Initialize the maze, player, and cat with some values
-    Maze* newMaze = new Maze(mazeDimensions.first, mazeDimensions.second, 2, 1);
+    Maze* newMaze = new Maze(MAZE_DIMENSIONS.first, MAZE_DIMENSIONS.second, 2, 1);
     Mouse* playerMouse = new Mouse(1, 0.2f);
     Cat* enemyCat = new Cat(1, 0.125f);
 

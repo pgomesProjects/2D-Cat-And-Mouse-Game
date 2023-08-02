@@ -22,6 +22,7 @@ void GameOverScreen();
 const int MAX_FOOD_PIECES = 10;
 const int MINIMUM_CAT_SPAWN_DISTANCE = 10;
 const int MINIMUM_FOOD_SPAWN_DISTANCE = 10;
+const int CAT_MOVEMENT_COOLDOWN = 2;
 
 int main() {
 
@@ -66,6 +67,8 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
     bool gameOver = false;
     bool gameWin = false;
 
+    int movementCooldown = 0;
+
     //Player score
     int score = 0;
 
@@ -109,8 +112,15 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
                 if (currentPlayer.CheckForFood(currentMaze))
                     score++;
 
-                //Move the cat and check to see if they caught the player
-                gameOver = currentCat.CheckForMovement(currentMaze);
+                //If the cooldown for the cat to move has been reached, move the cat
+                if (movementCooldown >= CAT_MOVEMENT_COOLDOWN - 1) {
+                    movementCooldown = 0;
+                    //Move the cat and check to see if they caught the player
+                    gameOver = currentCat.CheckForMovement(currentMaze);
+                }
+                else {
+                    movementCooldown++;
+                }
 
                 //Check to see if the player won the game by collecting all of the food
                 gameWin = score >= MAX_FOOD_PIECES;
@@ -163,7 +173,7 @@ void StartScreen() {
         "\\____/   \\__,_/  \\__/         /_/ /_/            /_/  /_/   \\____/ \\__,_/  /____/  \\___/ ",
         "                                                                                         ",
         "You are a mouse in a randomly generated maze, trying to collect enough food to survive the night. However, a cat patrols the lanes to thwart you of your plans.",
-        "Whenever you move one space in the maze, the cat moves 1 to 2 spaces in the maze as well.",
+        "Whenever you move a couple of spaces in the maze, the cat moves 1 to 2 spaces in the maze as well.",
         "Whenever you roam around the maze, you leave an invisible scent trail in which the cat can pick up and follow, so be careful.",
         "\n===KEY===",
         "# - Wall",

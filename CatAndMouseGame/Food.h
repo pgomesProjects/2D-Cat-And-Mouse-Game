@@ -7,7 +7,10 @@ using std::pair;
 
 class Food {
 public:
+	//Constructors
 	Food(int x, int y);
+
+	//Places food in the maze
 	void PlaceFood(Maze& currentMaze);
 
 private:

@@ -63,14 +63,15 @@ void Maze::GenerateMaze(int x, int y) {
 	vector<pair<int, int>> adjacent = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 	shuffle(adjacent.begin(), adjacent.end(), gen);
 
-	//For each direction
+	//Check the adjacent cells in each direction
 	for (const auto& dir : adjacent) {
 		
+		//Check one space outside of the adjacent cell to allow for a one space wide path
 		int newX = x + 2 * dir.first;
 		int newY = y + 2 * dir.second;
 
 		//If the position being checked is not out of bounds and is a wall piece, make it an empty piece and make the path between the cells an empty piece
-		if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && this->mazeData[newX * cols + newY].GetTopPiece() == pieces["wall"].first) {
+		if (newX >= 0 && newX < this->cols && newY >= 0 && newY < this->rows && this->mazeData[newX * this->cols + newY].GetTopPiece() == pieces["wall"].first) {
 			this->mazeData[newX * cols + newY].AddPiece(pieces["emptySpace"].first);
 			this->mazeData[(x + dir.first) * this->cols + (y + dir.second)].AddPiece(pieces["emptySpace"].first);
 
@@ -107,11 +108,17 @@ pair<int, int> Maze::GetEmptyPositionInMaze(pair<int, int> playerPosition, int d
 		return emptySpaces[dist(gen)];
 	}
 
-	else
-		return { -1, -1 };
+	//Return negative value in case there are no empty positions (very unlikely)
+	return { -1, -1 };
 
 }
 
+/// <summary>
+/// Returns a distance from one cell to another.
+/// </summary>
+/// <param name="firstCell">The position of the first cell.</param>
+/// <param name="secondCell">The position of the second cell.</param>
+/// <returns>The distance between the two cells as a whole integer.</returns>
 int Maze::GetDistanceFrom(const pair<int, int>& firstCell, const pair<int, int>& secondCell) {
 	return abs(secondCell.first - firstCell.first) + abs(secondCell.second - firstCell.second);
 }

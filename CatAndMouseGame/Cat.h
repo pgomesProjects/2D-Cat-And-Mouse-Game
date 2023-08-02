@@ -14,6 +14,7 @@ public:
 	Cat();
 	Cat(int speed, float chanceForExtraMovement);
 
+	//Checks to see if the cat can move and if the cat can capture the player
 	bool CheckForMovement(Maze& currentMaze);
 
 	bool CanSmellPlayer();

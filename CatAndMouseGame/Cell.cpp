@@ -1,6 +1,7 @@
 //Headers
 #include "Cell.h"
 
+//Global piece list data (with string identifiers for readability)
 map<string, pair<char, int>>pieces = {
 	{"cat", {'C', 0}},
 	{"mouse", {'M', 1}},
@@ -26,6 +27,10 @@ Cell::Cell(char piece, float scentStrength) {
 	this->scentStrength = scentStrength;
 }
 
+/// <summary>
+/// Adds a piece to the cell.
+/// </summary>
+/// <param name="piece">The character value for the piece.</param>
 void Cell::AddPiece(char piece) {
 
 	//Get the priority number from the pre-defined list of pieces
@@ -40,6 +45,10 @@ void Cell::AddPiece(char piece) {
 	this->pieceList.insert(it, { piece, priority });
 }
 
+/// <summary>
+/// Removes a piece to the cell.
+/// </summary>
+/// <param name="piece">The character value for the piece.</param>
 void Cell::RemovePiece(char piece) {
 
 	pair<char, int> currentPiece = { piece, GetPiecePriority(piece) };
@@ -52,7 +61,7 @@ void Cell::RemovePiece(char piece) {
 }
 
 /// <summary>
-/// Returns the priority of the piece in order of how it should be shown on the map.
+/// Returns the priority of the piece in order of how it should be shown on the map (lower numbers are drawn on top of higher numbers).
 /// </summary>
 /// <param name="piece">The character data for the piece.</param>
 /// <returns>If the piece is not in the list of defined pieces, returns -1. Else, it returns the priority stored in the pre-defined list.</returns>
@@ -61,6 +70,7 @@ int Cell::GetPiecePriority(char piece) {
 	//Find the priority of the piece given
 	int priorityValue = -1;
 
+	//If the character value is found in the map of piece list data, return the priority value
 	for (const auto& p : pieces) {
 		if (p.second.first == piece) {
 			priorityValue = p.second.second;

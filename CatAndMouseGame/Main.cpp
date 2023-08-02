@@ -1,3 +1,9 @@
+/*
+*   2D Cat n' Mouse Maze Game C++ Sample
+*   Author: Peter Gomes
+*   Date: 8/2/23
+*/
+
 #include <conio.h>
 #include <iostream>
 #include <vector>
@@ -161,6 +167,9 @@ void RefreshGameBoard(Maze& currentMaze, Cat& currentCat, int score) {
     cout << "\nPress WASD to move. Press Q to quit the game." << endl;
 }
 
+/// <summary>
+/// Displays a start screen when the program is run which explains the game's rules.
+/// </summary>
 void StartScreen() {
     char key;
 
@@ -191,6 +200,9 @@ void StartScreen() {
     system("cls");
 }
 
+/// <summary>
+/// Displays a game win screen when the game win state is met.
+/// </summary>
 void WinScreen() {
     char key;
     system("cls");
@@ -211,6 +223,9 @@ void WinScreen() {
     key = _getch();
 }
 
+/// <summary>
+/// Displays a game over screen when the game lose state is met.
+/// </summary>
 void GameOverScreen() {
     char key;
     system("cls");

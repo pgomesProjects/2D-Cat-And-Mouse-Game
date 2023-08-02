@@ -19,7 +19,10 @@ public:
 	Cell(char piece);
 	Cell(char piece, float scentStrength);
 
+	//Adds a piece to the cell
 	void AddPiece(char piece);
+
+	//Removes a piece from the cell
 	void RemovePiece(char piece);
 
 	//GETTERS
@@ -34,5 +37,6 @@ private:
 	vector<pair<char, int>> pieceList;
 	float scentStrength;
 
+	//Gets a piece's priority based on the character data given
 	int GetPiecePriority(char piece);
 };

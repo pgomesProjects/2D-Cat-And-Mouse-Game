@@ -28,6 +28,7 @@ public:
 	//Prints array
 	void Print();
 
+	//GETTERS
 	pair<int, int> GetEntrance();
 	Cell& GetCell(int row, int col);
 	int GetRows();

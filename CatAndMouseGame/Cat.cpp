@@ -13,6 +13,11 @@ Cat::Cat(int speed, float chanceForExtraMovement) : Entity(pieces["cat"].first, 
 	this->canSmellPlayer = false;
 }
 
+/// <summary>
+/// Checks to see if the Cat has any potential areas for movement and whether they can capture the player.
+/// </summary>
+/// <param name="currentMaze">The data for the maze.</param>
+/// <returns>If true, the cat has captured the player.</returns>
 bool Cat::CheckForMovement(Maze& currentMaze) {
 	
 	//Random device used for seeding
@@ -22,13 +27,15 @@ bool Cat::CheckForMovement(Maze& currentMaze) {
 	//Add a chance for the cat to move one extra time based on its properties
 	int extraMovements = 0;
 	std::uniform_int_distribution<int> dist(0, 100);
-	float chanceToMove = dist(gen);
+	float chanceToMove = (float)dist(gen);
 	if (chanceToMove < chanceForExtraMovement * 100)
 		extraMovements++;
 
+	//Moves the cat based on the speed and adds any extra movements that may be applicable
 	for (int i = 0; i < this->speed + extraMovements; i++) {
-		vector<pair<int, int>> adjacent = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
+
+		vector<pair<int, int>> adjacent = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 		vector<pair<int, int>> possibleMovements;
 
 		//For each direction, check to see where the cat can move
@@ -45,6 +52,7 @@ bool Cat::CheckForMovement(Maze& currentMaze) {
 					return true;
 				}
 
+				//Add to the list of possible movements
 				possibleMovements.push_back({ newX, newY });
 			}
 		}
@@ -53,7 +61,7 @@ bool Cat::CheckForMovement(Maze& currentMaze) {
 
 			//Go through the list of possible movements
 			int moveIndex = -1;
-			for (size_t i = 0; i < possibleMovements.size(); i++) {
+			for (int i = 0; i < possibleMovements.size(); i++) {
 				//If there's been a scent picked up already, but there's a stronger scent in another direction, switch directions
 				if (moveIndex >= 0 && currentMaze.GetCell(possibleMovements[i].first, possibleMovements[i].second).GetScentStrength() > currentMaze.GetCell(possibleMovements[moveIndex].first, possibleMovements[moveIndex].second).GetScentStrength()) {
 					moveIndex = i;
@@ -67,9 +75,9 @@ bool Cat::CheckForMovement(Maze& currentMaze) {
 			//If the move index has changed, a smell has been found
 			this->canSmellPlayer = moveIndex >= 0;
 
-			//If no scent found, move at random
+			//If no scent has been found, move the cat in a random direction from the list of movement options (simplistic movement for demonstration purposes)
 			if (!this->canSmellPlayer) {
-				std::uniform_int_distribution<int> dist(0, possibleMovements.size() - 1);
+				std::uniform_int_distribution<int> dist(0, (int)possibleMovements.size() - 1);
 					moveIndex = dist(gen);
 			}
 

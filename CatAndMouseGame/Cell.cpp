@@ -1,5 +1,6 @@
 //Headers
 #include "Cell.h"
+#include "Maze.h"
 
 //Global piece list data (with string identifiers for readability)
 map<string, pair<char, int>>pieces = {
@@ -58,6 +59,40 @@ void Cell::RemovePiece(char piece) {
 	if (it != this->pieceList.end()) {
 		this->pieceList.erase(it);
 	}
+}
+
+void Cell::PrintCell() {
+	//Get the top piece in the cell (the piece that will be shown in the console)
+	pair<char, int> currentPiece = pieceList[0];
+
+	console::TEXTCOLORS cellColor;
+
+	//Change the color of the piece based on the type of piece being shown
+	switch (currentPiece.second) {
+	//Cat
+	case 0:
+		cellColor = Maze::catColor;
+		break;
+	//Mouse
+	case 1:
+		cellColor = Maze::mouseColor;
+		break;
+	//Food
+	case 2:
+		cellColor = Maze::foodColor;
+		break;
+	//Wall
+	case 4:
+		cellColor = Maze::wallColor;
+		break;
+	default:
+		cellColor = console::WHITE;
+		break;
+	}
+
+	//Print the cell information
+	string cellString(1, currentPiece.first);
+	console::PrintColorText(cellString, cellColor);
 }
 
 /// <summary>

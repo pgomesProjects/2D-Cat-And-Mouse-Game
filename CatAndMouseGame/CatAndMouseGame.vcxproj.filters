@@ -36,25 +36,31 @@
     <ClCompile Include="Food.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Maze.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cell.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="console.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Cat.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Food.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Maze.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

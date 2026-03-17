@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="console.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="Cat.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="console.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="Maze.h" />

@@ -132,7 +132,8 @@ void Maze::Print() {
 		
 		for (int y = 0; y < this->cols; y++) {
 
-			cout << this->mazeData[x * this->cols + y].GetTopPiece();
+			//Print the cell information
+			this->mazeData[x * this->cols + y].PrintCell();
 
 			//Add spaces between each column as needed
 			for (int s = 0; s < this->spacingX; s++) {
@@ -143,7 +144,7 @@ void Maze::Print() {
 		//Always have one break between rows
 		cout << endl;
 
-		//Add additonal spaces between rows as needed
+		//Add additional spaces between rows as needed
 		for (int s = 1; s < this->spacingY; s++) {
 			cout << endl;
 		}

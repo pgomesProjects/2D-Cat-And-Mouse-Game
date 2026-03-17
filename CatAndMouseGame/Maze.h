@@ -4,6 +4,7 @@
 #include <random>
 #include <vector>
 #include <algorithm>
+#include "console.h"
 using std::abs;
 using std::cout;
 using std::endl;
@@ -16,6 +17,12 @@ using std::vector;
 
 class Maze {
 public:
+	//Static variables
+	static const console::TEXTCOLORS wallColor = console::GRAY;
+	static const console::TEXTCOLORS mouseColor = console::GREEN;
+	static const console::TEXTCOLORS catColor = console::RED;
+	static const console::TEXTCOLORS foodColor = console::YELLOW;
+
 	//Constructors
 	Maze(int size);
 	Maze(int rows, int cols);

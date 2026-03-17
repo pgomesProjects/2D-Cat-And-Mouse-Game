@@ -1,12 +1,11 @@
 #pragma once
+#include "console.h"
 #include <map>
 #include <iostream>
-#include <string>
 #include <vector>
 using std::cout;
 using std::map;
 using std::pair;
-using std::string;
 using std::vector;
 
 //Global declarations for Maze piece characters
@@ -19,11 +18,22 @@ public:
 	Cell(char piece);
 	Cell(char piece, float scentStrength);
 
-	//Adds a piece to the cell
+	/// <summary>
+	/// Adds a piece to the cell.
+	/// </summary>
+	/// <param name="piece">The character value for the piece.</param>
 	void AddPiece(char piece);
 
-	//Removes a piece from the cell
+	/// <summary>
+	/// Removes a piece from the cell.
+	/// </summary>
+	/// <param name="piece">The character value for the piece.</param>
 	void RemovePiece(char piece);
+
+	/// <summary>
+	/// Prints the cell data to the console.
+	/// </summary>
+	void PrintCell();
 
 	//GETTERS
 	char GetTopPiece();

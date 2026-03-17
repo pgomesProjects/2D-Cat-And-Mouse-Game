@@ -1,6 +1,6 @@
 /*
 *   2D Cat n' Mouse Maze Game C++ Sample
-*   Date: 8/2/23
+*   Date: 3/17/26
 */
 
 #include <conio.h>
@@ -11,6 +11,7 @@ using std::endl;
 using std::pair;
 
 //Headers
+#include "console.h"
 #include "Maze.h"
 #include "Mouse.h"
 #include "Cat.h"
@@ -157,7 +158,7 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
 /// <param name="currentCat">The data for the cat to display the status of the cat's behavior.</param>
 /// <param name="score">The player's score to show their progress.</param>
 void RefreshGameBoard(Maze& currentMaze, Cat& currentCat, int score) {
-    system("cls");  //Refresh console
+    console::ClearScreen();  //Refresh console
 
     //Print the maze data
     currentMaze.Print();
@@ -186,19 +187,57 @@ void StartScreen() {
         "Whenever you move a couple of spaces in the maze, the cat moves 1 to 2 spaces in the maze as well.",
         "Whenever you roam around the maze, you leave an invisible scent trail in which the cat can pick up and follow, so be careful.",
         "\n===KEY===",
-        "# - Wall",
+        " - Wall",
         ". - Empty Space",
-        "M - You (the player)",
-        "C - The Cat",
-        "F - Food (collectable)"
+        " - The Mouse (Player)",
+        " - The Cat",
+        " - Food (collectable)"
     };
 
-    for (const auto& line : startText)
-        cout << line << endl;
+    for (int i = 0; i < sizeof(startText) / sizeof(startText[0]); i++) {
+        //Get the line of text
+        string line = startText[i];
+
+        switch (i) {
+        //Print the title in teal
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            console::PrintColorText(line, console::TEAL);
+            cout << endl;
+            break;
+        //Show the wall symbol
+        case 10:
+            console::PrintColorText("#", Maze::wallColor);
+            cout << line << endl;
+            break;
+        //Show the player symbol
+        case 12:
+            console::PrintColorText("M", Maze::mouseColor);
+            cout << line << endl;
+            break;
+        //Show the cat symbol          
+        case 13:
+            console::PrintColorText("C", Maze::catColor);
+            cout << line << endl;
+            break;
+        //Show the food symbol
+        case 14:
+            console::PrintColorText("F", Maze::foodColor);
+            cout << line << endl;
+            break;
+        //Print normally
+        default:
+            cout << line << endl;
+            break;
+        }
+    }
 
     cout << "\nPress any key to start." << endl;
     key = _getch();
-    system("cls");
+    console::ClearScreen();  //Refresh console
 }
 
 /// <summary>
@@ -206,7 +245,7 @@ void StartScreen() {
 /// </summary>
 void WinScreen() {
     char key;
-    system("cls");
+    console::ClearScreen();  //Refresh console
 
     string gameWinText[] =
     {"__  __                       _       __    _             __",
@@ -229,7 +268,7 @@ void WinScreen() {
 /// </summary>
 void GameOverScreen() {
     char key;
-    system("cls");
+    console::ClearScreen();  //Refresh console
 
     string gameOverText [] = 
     {"   ______                                    ____                      ",

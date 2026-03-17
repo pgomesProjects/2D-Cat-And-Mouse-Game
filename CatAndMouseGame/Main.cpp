@@ -11,6 +11,7 @@ using std::endl;
 using std::pair;
 
 //Headers
+#include "AudioManager.h"
 #include "console.h"
 #include "Maze.h"
 #include "Mouse.h"
@@ -18,6 +19,7 @@ using std::pair;
 #include "Food.h"
 
 //Function prototypes
+void PreloadSounds();
 void StartScreen();
 void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat);
 void RefreshGameBoard(Maze& currentMaze, Cat& currentCat, int score);
@@ -30,9 +32,13 @@ const int MINIMUM_CAT_SPAWN_DISTANCE = 10;
 const int MINIMUM_FOOD_SPAWN_DISTANCE = 10;
 const int CAT_MOVEMENT_COOLDOWN = 2;
 
+AudioManager audioManager;
+
 const pair<int, int> MAZE_DIMENSIONS = {30, 35};
 
 int main() {
+    //Preload the audio for the game
+    PreloadSounds();
 
     //Initialize the maze, player, and cat with some values
     Maze* newMaze = new Maze(MAZE_DIMENSIONS.first, MAZE_DIMENSIONS.second, 2, 1);
@@ -54,9 +60,24 @@ int main() {
     StartScreen();
 
     //Enter the game loop
+    audioManager.playSound("GameMusic", true);
     GameLoop(*newMaze, *playerMouse, *enemyCat);
 
 	return 0;
+}
+
+/// <summary>
+/// Preloads the sounds that will be used in the game.
+/// </summary>
+void PreloadSounds() {
+    //Music
+    audioManager.createSound("GameMusic", "Audio/BGM/game_music.wav");
+
+    //SFX
+    audioManager.createSound("Pickup", "Audio/SFX/food_pickup.wav");
+    audioManager.createSound("Move", "Audio/SFX/player_move.wav");
+    audioManager.createSound("Win", "Audio/SFX/win_sfx.wav");
+    audioManager.createSound("Lose", "Audio/SFX/lose_sfx.wav");
 }
 
 /// <summary>
@@ -116,9 +137,18 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
 
             if (gameActive) {
 
+                //Play the player movement sound
+                if (audioManager.isSoundPlaying("Move"))
+                    audioManager.stopSound("Move");
+                audioManager.playSound("Move");
+
                 //If the player found food, add to the player's score
-                if (currentPlayer.CheckForFood(currentMaze))
+                if (currentPlayer.CheckForFood(currentMaze)) {
+                    if (audioManager.isSoundPlaying("Pickup"))
+                        audioManager.stopSound("Pickup");
+                    audioManager.playSound("Pickup");
                     score++;
+                }
 
                 //If the cooldown for the cat to move has been reached, move the cat
                 if (movementCooldown >= CAT_MOVEMENT_COOLDOWN - 1) {
@@ -259,6 +289,12 @@ void WinScreen() {
     for (const auto& line : gameWinText)
         cout << line << endl;
 
+    //Stop the game music
+    if (audioManager.isSoundPlaying("GameMusic"))
+        audioManager.stopSound("GameMusic");
+
+    //Play the win SFX
+    audioManager.playSound("Win");
     cout << "Press any key to quit the game." << endl;
     key = _getch();
 }
@@ -281,6 +317,12 @@ void GameOverScreen() {
     for (const auto& line : gameOverText)
         cout << line << endl;
 
+    //Stop the game music
+    if (audioManager.isSoundPlaying("GameMusic"))
+        audioManager.stopSound("GameMusic");
+
+    //Play the lose SFX
+    audioManager.playSound("Lose");
     cout << "Press any key to quit the game." << endl;
     key = _getch();
 }

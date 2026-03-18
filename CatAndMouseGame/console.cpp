@@ -6,8 +6,25 @@ using std::cout;
 using std::endl;
 
 void console::ClearScreen() {
-	//Clear the console
-	system("cls");
+	COORD coordScreen = { 0, 0 };
+	DWORD cCharsWritten;
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	DWORD dwConSize;
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Get the console size
+	GetConsoleScreenBufferInfo(hConsole, &csbi);
+	dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
+
+	//Fill the console with blank spaces
+	FillConsoleOutputCharacter(hConsole, TEXT(' '), dwConSize, coordScreen, &cCharsWritten);
+
+	//Resets all of the console outputs to remove any color
+	GetConsoleScreenBufferInfo(hConsole, &csbi);
+	FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
+
+	//Move the cursor to the top left
+	SetConsoleCursorPosition(hConsole, coordScreen);
 }
 
 void console::PrintColorText(string text, TEXTCOLORS color) {

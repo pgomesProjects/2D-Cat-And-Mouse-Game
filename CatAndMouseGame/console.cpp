@@ -6,37 +6,20 @@ using std::cout;
 using std::endl;
 
 void console::ClearScreen() {
-	COORD coordScreen = { 0, 0 };
-	DWORD cCharsWritten;
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	DWORD dwConSize;
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
-	FillConsoleOutputCharacter(hConsole, TEXT(' '),
-		dwConSize,
-		coordScreen,
-		&cCharsWritten);
-	GetConsoleScreenBufferInfo(hConsole, &csbi);
-	FillConsoleOutputAttribute(hConsole,
-		csbi.wAttributes,
-		dwConSize,
-		coordScreen,
-		&cCharsWritten);
-	SetConsoleCursorPosition(hConsole, coordScreen);
+	//Clear the console
+	system("cls");
 }
 
 void console::PrintColorText(string text, TEXTCOLORS color) {
 	//Set the color of the text and print it
-	setrgb(color);
+	SetConsoleColor(color);
 	cout << text;
 
 	//Reset the text color
-	setrgb(console::WHITE);
+	SetConsoleColor(console::WHITE);
 }
 
-void console::setrgb(TEXTCOLORS color) {
-	//Set color of text
+void console::SetConsoleColor(TEXTCOLORS color) {
+	//Set color of the console text / background
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }

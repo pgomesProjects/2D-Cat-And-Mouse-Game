@@ -60,7 +60,7 @@ int main() {
     StartScreen();
 
     //Enter the game loop
-    audioManager.playSound("GameMusic", true);
+    audioManager.PlaySound("GameMusic");
     GameLoop(*newMaze, *playerMouse, *enemyCat);
 
 	return 0;
@@ -71,13 +71,13 @@ int main() {
 /// </summary>
 void PreloadSounds() {
     //Music
-    audioManager.createSound("GameMusic", "Audio/BGM/game_music.wav");
+    audioManager.CreateSound("GameMusic", "Audio/BGM/game_music.wav", true);
 
     //SFX
-    audioManager.createSound("Pickup", "Audio/SFX/food_pickup.wav");
-    audioManager.createSound("Move", "Audio/SFX/player_move.wav");
-    audioManager.createSound("Win", "Audio/SFX/win_sfx.wav");
-    audioManager.createSound("Lose", "Audio/SFX/lose_sfx.wav");
+    audioManager.CreateSound("Pickup", "Audio/SFX/food_pickup.wav");
+    audioManager.CreateSound("Move", "Audio/SFX/player_move.wav");
+    audioManager.CreateSound("Win", "Audio/SFX/win_sfx.wav");
+    audioManager.CreateSound("Lose", "Audio/SFX/lose_sfx.wav");
 }
 
 /// <summary>
@@ -107,6 +107,9 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
     //Game loop
     while (gameActive) {
 
+        //Update the audio manager
+        audioManager.Update();
+
         bool inputValid = false;
 
         // Wait for a key press without the need to press Enter
@@ -114,18 +117,23 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
 
         //Try to move the player if they press the right button. If they press 'Q', quit the game immediately
         switch (key) {
+        //Up Movement
         case 'w':
             inputValid = currentPlayer.Move(currentMaze, -1, 0);
             break;
+        //Left Movement
         case 'a':
             inputValid = currentPlayer.Move(currentMaze, 0, -1);
             break;
+        //Down Movement
         case 's':
             inputValid = currentPlayer.Move(currentMaze, 1, 0);
             break;
+        //Right Movement
         case 'd':
             inputValid = currentPlayer.Move(currentMaze, 0, 1);
             break;
+        //Quit Application
         case 'q':
             gameActive = false;
             inputValid = true;
@@ -138,15 +146,15 @@ void GameLoop(Maze& currentMaze, Mouse& currentPlayer, Cat& currentCat) {
             if (gameActive) {
 
                 //Play the player movement sound
-                if (audioManager.isSoundPlaying("Move"))
-                    audioManager.stopSound("Move");
-                audioManager.playSound("Move");
+                if (audioManager.IsSoundPlaying("Move"))
+                    audioManager.StopSound("Move");
+                audioManager.PlaySound("Move");
 
                 //If the player found food, add to the player's score
                 if (currentPlayer.CheckForFood(currentMaze)) {
-                    if (audioManager.isSoundPlaying("Pickup"))
-                        audioManager.stopSound("Pickup");
-                    audioManager.playSound("Pickup");
+                    if (audioManager.IsSoundPlaying("Pickup"))
+                        audioManager.StopSound("Pickup");
+                    audioManager.PlaySound("Pickup");
                     score++;
                 }
 
@@ -290,11 +298,11 @@ void WinScreen() {
         cout << line << endl;
 
     //Stop the game music
-    if (audioManager.isSoundPlaying("GameMusic"))
-        audioManager.stopSound("GameMusic");
+    if (audioManager.IsSoundPlaying("GameMusic"))
+        audioManager.StopSound("GameMusic");
 
     //Play the win SFX
-    audioManager.playSound("Win");
+    audioManager.PlaySound("Win");
     cout << "Press any key to quit the game." << endl;
     key = _getch();
 }
@@ -318,11 +326,11 @@ void GameOverScreen() {
         cout << line << endl;
 
     //Stop the game music
-    if (audioManager.isSoundPlaying("GameMusic"))
-        audioManager.stopSound("GameMusic");
+    if (audioManager.IsSoundPlaying("GameMusic"))
+        audioManager.StopSound("GameMusic");
 
     //Play the lose SFX
-    audioManager.playSound("Lose");
+    audioManager.PlaySound("Lose");
     cout << "Press any key to quit the game." << endl;
     key = _getch();
 }

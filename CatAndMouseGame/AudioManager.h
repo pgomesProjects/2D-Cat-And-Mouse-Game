@@ -15,22 +15,31 @@ using std::endl;
 using std::list;
 using std::string;
 
-struct SoundData {
+class SoundData {
+public:
+	//Constructors
+	SoundData(const string& name, const string& fileDirectory);
+	SoundData(const string& name, const string& directory, const bool& loop);
+
+	//GETTERS
+	string GetName();
+	string GetFileDirectory();
+	bool IsLooping();
+	Sound* GetSound();
+
+	//SETTERS
+	void SetSound(Sound* sound);
+
+private:
 	string name;
 	string fileDirectory;
-
-	SoundData(const string& name, const string& fileDirectory) {
-		this->name = name;
-		this->fileDirectory = fileDirectory;
-	}
+	bool loop;
+	Sound* sound;
 };
 
-struct PlayedSound {
-	SoundData soundData;
-	Sound* sound;
+struct ActiveSound {
+	string name;
 	Channel* channel;
-
-	PlayedSound(SoundData soundData, Sound* sound = nullptr, Channel* channel = nullptr) : soundData(soundData), sound(sound), channel(channel) { }
 };
 
 class AudioManager {
@@ -41,18 +50,19 @@ public:
 	//Destructors
 	~AudioManager();
 
-	void createSound(const string& name, const string& fileDirectory);
-	void playSound(const string& soundName, bool loop = false);
-	void stopSound(const string& soundName);
-	bool isSoundPlaying(const string& soundName);
+	void CreateSound(const string& name, const string& fileDirectory, bool loop = false);
+	void PlaySound(const string& soundName);
+	void StopSound(const string& soundName);
+	bool IsSoundPlaying(const string& soundName);
+	void Update();
 
 private:
 	FMOD::System* system;
-	list<SoundData> soundData;
-	list<PlayedSound> playedSounds;
+	list<SoundData*> soundMap;
+	list<ActiveSound> activeSounds;
 
 	void init();
 
-	void checkFMODResult(FMOD_RESULT result);
-	SoundData getSoundData(const string& soundName);
+	void CheckFMODResult(FMOD_RESULT result);
+	SoundData* GetSoundData(const string& soundName);
 };

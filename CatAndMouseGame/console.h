@@ -43,5 +43,5 @@ private:
 	/// Sets the text and background colors.
 	/// </summary>
 	/// <param name="color">The option for the color of the text.</param>
-	static void setrgb(TEXTCOLORS color);
+	static void SetConsoleColor(TEXTCOLORS color);
 };
